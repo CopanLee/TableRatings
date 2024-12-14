@@ -1,11 +1,13 @@
 import hashlib
-from rest_framework_simplejwt.tokens import AccessToken
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from drf_yasg.utils import swagger_auto_schema
 
+from drf_yasg.utils import swagger_auto_schema
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework_simplejwt.tokens import AccessToken
 from users.models import Users
+
 from .serializers import LoginSerializer
+
 
 class LoginAPI(APIView):
 

@@ -1,10 +1,10 @@
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
 from drf_yasg.utils import swagger_auto_schema
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from .models import Restaurant
-from .serializers import RestaurantSerializer, GetRestaurantSerializer, PostRestaurantSerializer
+from .serializers import GetRestaurantSerializer, PostRestaurantSerializer, RestaurantSerializer
 
 
 class RestaurantListAPI(APIView):
@@ -35,7 +35,7 @@ class RestaurantListAPI(APIView):
             queryset = queryset.all().order_by(sort)
         serializer = RestaurantSerializer(queryset, many=True)
         return Response(serializer.data)
-    
+
     @swagger_auto_schema(
         request_body=PostRestaurantSerializer,
         responses={201: RestaurantSerializer},
@@ -67,7 +67,7 @@ class RestaurantDetailAPI(APIView):
             return Response({'msg': 'Restaurant not found'}, status=status.HTTP_404_NOT_FOUND)
         serializer = RestaurantSerializer(restaurant)
         return Response(serializer.data)
-    
+
     @swagger_auto_schema(
         request_body=PostRestaurantSerializer,
         responses={200: RestaurantSerializer},
@@ -81,7 +81,7 @@ class RestaurantDetailAPI(APIView):
             restaurant = Restaurant.objects.get(pk=id)
         except Restaurant.DoesNotExist:
             return Response({'msg': 'Restaurant not found'}, status=status.HTTP_404_NOT_FOUND)
-        
+
         serializer = RestaurantSerializer(restaurant, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()

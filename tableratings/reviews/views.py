@@ -1,10 +1,10 @@
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
 from drf_yasg.utils import swagger_auto_schema
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from .models import Reviews
-from .serializers import ReviewsSerializer, GetReviewsSerializer, PostReviewsSerializer, PatchReviewsSerializer
+from .serializers import GetReviewsSerializer, PatchReviewsSerializer, PostReviewsSerializer, ReviewsSerializer
 
 
 class ReviewsAPI(APIView):
@@ -91,7 +91,7 @@ class ReviewsDetailAPI(APIView):
                 return Response({'message': 'Unauthorized'}, status=status.HTTP_401_UNAUTHORIZED)
         except Reviews.DoesNotExist:
             return Response({'msg': 'Review not found'}, status=status.HTTP_404_NOT_FOUND)
-        
+
         review.delete()
         Reviews.update_average_rating(review.restaurant.id)
         return Response({'message': 'Review delete'}, status=status.HTTP_204_NO_CONTENT)

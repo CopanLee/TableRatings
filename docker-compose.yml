@@ -1,0 +1,31 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres:16.6
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: tableratings
+
+  web:
+    build: .
+    command: > 
+      sh -c "poetry run python tableratings/manage.py migrate && poetry run python tableratings/manage.py runserver 0.0.0.0:8000"
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: tableratings
+      DB_USER: postgres
+      DB_PASSWORD: postgres
+
+volumes:
+  postgres_db:

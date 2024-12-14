@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "table-ratings"
+version = "0.1.0"
+description = ""
+authors = ["Copan <copanlee@gmail.com>"]
+readme = "README.md"
+packages = [{include = "table_ratings"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+django = "^5.1.4"
+djangorestframework = "^3.15.2"
+pre-commit = "^4.0.1"
+psycopg2 = "^2.9.10"
+djangorestframework-simplejwt = "^5.3.1"
+drf-yasg = "^1.21.8"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
